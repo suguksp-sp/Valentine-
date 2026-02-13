@@ -15,116 +15,90 @@
         height: 100vh;
         text-align: center;
         color: white;
-        overflow: hidden;
     }
 
-    .container {
+    .box {
         background: rgba(255,255,255,0.15);
-        padding: 40px;
-        border-radius: 20px;
+        padding: 30px;
+        border-radius: 15px;
         backdrop-filter: blur(10px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        max-width: 350px;
     }
 
-    .buttons {
-        margin-top: 25px;
-        position: relative;
-        height: 80px;
+    input, button {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: none;
+        margin-top: 10px;
     }
 
     button {
-        padding: 12px 25px;
-        font-size: 18px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        margin: 10px;
-    }
-
-    #yesBtn {
-        background-color: #ff2e63;
+        background: #ff2e63;
         color: white;
-    }
-
-    #noBtn {
-        background-color: #ddd;
-        color: black;
-        position: absolute;
-        left: 60%;
-    }
-
-    .celebration {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: linear-gradient(to right, #ff4b5c, #ff758c);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .photos img {
-        width: 150px;
-        border-radius: 15px;
-        margin: 10px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        cursor: pointer;
     }
 </style>
 </head>
 <body>
 
-<div class="container" id="mainBox">
-    <h1>Prabhu ❤️</h1>
-    <p>
-        You are the most special person in my life…  
-        Will you stay with me forever?
-    </p>
-    <p><b>Will you be my Valentine?</b></p>
-
-    <div class="buttons">
-        <button id="yesBtn" onclick="sayYes()">Yes ❤️</button>
-        <button id="noBtn" onclick="moveNo()">No</button>
-    </div>
-
-    <div id="message"></div>
+<div class="box" id="loginBox">
+    <h2>Private Love Message ❤️</h2>
+    <p>Enter the password</p>
+    <input type="password" id="password" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Enter</button>
+    <p id="error"></p>
 </div>
 
-<!-- Music stays outside so it never disappears -->
 <audio id="bgMusic" loop>
     <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+const correctPassword = "2829"; // change this to any password you like
+
+function checkPassword() {
+    const input = document.getElementById("password").value;
+
+    if (input === correctPassword) {
+        showProposal();
+    } else {
+        document.getElementById("error").innerText = "Wrong password!";
+    }
+}
+
+function showProposal() {
+    document.body.innerHTML = `
+    <div style="text-align:center;color:white;">
+        <h1>Prabhu ❤️</h1>
+        <p>You are the most special person in my life…<br>
+        Will you stay with me forever?</p>
+        <button onclick="sayYes()">Yes ❤️</button>
+        <button onclick="moveNo()" id="noBtn">No</button>
+        <p id="message"></p>
+    </div>
+    `;
+}
+
 const messages = [
     "Are you sure, Prabhu? 😏",
     "Wrong button! Try again 😂",
     "Nice try… but No is disabled 😜",
     "Your finger slipped. Press Yes ❤️",
-    "System error: Only Yes allowed 💘",
-    "Think again… I’ll wait 😌"
+    "System error: Only Yes allowed 💘"
 ];
 
 function sayYes() {
-    // show celebration
     document.body.innerHTML += `
-    <div class="celebration">
-        <h1>Suganya ❤️ Prabhu</h1>
-        <h2>Forever Starts Today 💍</h2>
-
-        <div class="photos">
-            <img src="photo1.jpg">
-            <img src="photo2.jpg">
-        </div>
+    <div style="margin-top:20px;">
+        <h1>Prabhu❤️</h1>
+        <h2>Right Answer 😅 I am your Forever💍</h2>
+        <img src="photo1.jpg" width="150" style="border-radius:10px;margin:10px;">
+        <img src="photo2.jpg" width="150" style="border-radius:10px;margin:10px;">
     </div>
     `;
 
-    // play music
-    const music = document.getElementById("bgMusic");
-    music.play();
+    document.getElementById("bgMusic").play();
 }
 
 function moveNo() {
